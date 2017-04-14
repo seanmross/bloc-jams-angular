@@ -12,9 +12,9 @@
      <table class="album-view-song-list">
        <tr class="album-view-song-item" ng-mouseover="hovered = true" ng-mouseleave="hovered = false" ng-repeat="songItem in album.albumData.songs">
          <td class="song-item-number">
-           <span ng-show="!playing && !hovered">{{ $index+1 }}</span>
-             <a class="album-song-button" ng-show="!playing && hovered"><span class="ion-play"></span></a>
-             <a class="album-song-button" ng-show="playing"><span class="ion-pause"></span></a>
+           <span ng-show="!songItem.playing && !hovered">{{ $index+1 }}</span>
+             <a class="album-song-button" ng-show="hovered && !songItem.playing" ng-click="album.songPlayer.play(songItem)"><span class="ion-play"></span></a>
+             <a class="album-song-button" ng-show="songItem.playing" ng-click="album.songPlayer.pause(songItem)"><span class="ion-pause"></span></a>
          </td>
          <td class="song-item-title">{{ songItem.title }}</td>
          <td class="song-item-duration">{{ songItem.duration }}</td>
