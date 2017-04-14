@@ -1,5 +1,9 @@
 (function(){
   function SongPlayer(){
+    /*
+    * @desc object to hold index of currently playing song from our album object, or null if no song is playing
+    * @type {Object}
+    */
     var currentSong = null; //initialize current song to null, no song is playing on page load. this gets compared to song, which is the songItem in album.albumData.songs
     /*
     * @desc Buzz object audio file
@@ -24,19 +28,35 @@
 
       currentSong = song;
     };
-
+    /*
+    * @function playSong
+    * @desc plays currentBuzzObject and sets song object to true
+    * @param song {Object}
+    */
+    var playSong = function(song){
+      currentBuzzObject.play();
+      song.playing = true;
+    };
+    /*
+    * @method play
+    * @desc checks to see if song item number being clicked on is equal to currentSong, if false - pauses current song, sets, plays new song, if true - checks to see if song is paused
+    * @param song {Object}
+    */
     SongPlayer.play = function(song) {
         if (currentSong !== song) { //if no song is playing/currently playing song is not equal to the song being clicked on, then pass in the new song
           setSong(song);
-          currentBuzzObject.play();
-          song.playing = true;
+          playSong(song);
         } else if (currentSong === song) { //if current song playing is equal to song being clicked on
           if (currentBuzzObject.isPaused()){ //if current buzz library song is paused, then play it
-            currentBuzzObject.play();
+            playSong(song);
           }
         }
     };
-
+    /*
+    * @method pause
+    * @desc pauses current song, sets .playing property to false
+    * @param song {Object}
+    */
     SongPlayer.pause = function(song) {
       currentBuzzObject.pause();
       song.playing = false;
