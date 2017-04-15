@@ -49,6 +49,15 @@
     };
 
     /*
+    * @function stopSong
+    * @desc stops currently playing buzz object
+    */
+    var stopSong = function(song){
+      currentBuzzObject.stop();
+      song.playing = null;
+    }
+
+    /*
     * @desc public object to hold index of currently playing song from our album object, or null if no song is playing
     * @type {Object}
     */
@@ -90,12 +99,28 @@
      currentSongIndex--;
 
      if (currentSongIndex < 0) {
-         currentBuzzObject.stop();
-         SongPlayer.currentSong.playing = null;
+         stopSong(SongPlayer.currentSong);
        } else {
            var previousSong = currentAlbum.songs[currentSongIndex];
            setSong(previousSong);
            playSong(previousSong);
+       }
+    };
+
+    /*
+    * @method previous
+    * @desc gets index of previous song for player bar
+    */
+    SongPlayer.next = function() {
+     var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+     currentSongIndex++;
+
+     if (currentSongIndex > currentAlbum.songs.length - 1) {
+       stopSong(SongPlayer.currentSong);
+       } else {
+           var nextSong = currentAlbum.songs[currentSongIndex];
+           setSong(nextSong);
+           playSong(nextSong);
        }
     };
 
