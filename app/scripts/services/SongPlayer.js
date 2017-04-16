@@ -1,5 +1,5 @@
 (function(){
-  function SongPlayer(Fixtures){
+  function SongPlayer($rootScope, Fixtures){
     /*
     * @desc private object to store album information using fixtures factory
     * @type {Object}
@@ -25,6 +25,12 @@
       currentBuzzObject = new buzz.sound(song.audioUrl, {
         formats: ['mp3'],
         preload: true
+      });
+
+      currentBuzzObject.bind('timeupdate', function() {
+        $rootScope.$apply(function() {
+          SongPlayer.currentTime = currentBuzzObject.getTime();
+        });
       });
 
       SongPlayer.currentSong = song;
@@ -62,6 +68,12 @@
     * @type {Object}
     */
     SongPlayer.currentSong = null; //initialize current song to null, no song is playing on page load. this gets compared to song, which is the songItem in album.albumData.songs
+
+    /*
+    * @desc Current playback time (in seconds) of currently playing song
+    * @type {Number}
+    */
+    SongPlayer.currentTime = null;
 
     /*
     * @method play
@@ -124,10 +136,23 @@
        }
     };
 
+    /*
+    * @function setCurrentTime
+    * @desc Set current time (in seconds) of currently playing song
+    * @param {Number} time
+    */
+    SongPlayer.setCurrentTime = function(time) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setTime(time);
+      }
+    };
+
+
     return SongPlayer;
   }
 
   angular
     .module('blocJams')
-    .factory('SongPlayer', [ 'Fixtures', SongPlayer]);
+    .factory('SongPlayer', [ 'Fixtures', SongPlayer])
+    .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer]);
 })();
