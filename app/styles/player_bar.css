@@ -113,7 +113,7 @@
     height: 0.5rem;
     width: 0.5rem;
     background-color: white;
-    left: 36%;
+    position: left;
     top: 50%;
     margin-left: -0.25rem;
     margin-top: -0.25rem;

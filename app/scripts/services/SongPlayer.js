@@ -9,7 +9,7 @@
     * @desc Buzz object audio file
     * @type {Object}
     */
-    var currentBuzzObject = null; //initialize buzz object. this is the buzz library obj  ect we call methods on to activate API and actually play the music
+    var currentBuzzObject = null; //initialize buzz object. this is the buzz library object we call methods on to activate API and actually play the music
 
     /*
     * @function setSong
@@ -75,12 +75,17 @@
     */
     SongPlayer.currentTime = null;
 
+
+    SongPlayer.volume = 25;
+
+
     /*
     * @method play
     * @desc checks to see if song item number being clicked on is equal to SongPlayer.currentSong, if false - pauses current song, sets, plays new song, if true - checks to see if song is paused
     * @param song {Object}
     */
     SongPlayer.play = function(song) {
+        SongPlayer.volume = 25;
         song = song || SongPlayer.currentSong; //(1) song when we call the methods from album view, or (2) SongPlayer.currentSong when we call from player bar
         if (SongPlayer.currentSong !== song) { //if no song is playing/currently playing song is not equal to the song being clicked on, then pass in the new song
           setSong(song);
@@ -147,6 +152,21 @@
       }
     };
 
+    /*
+    * @function showArtist
+    * @desc show artist in player bar only when a song is playing
+    */
+    SongPlayer.showArtist = function() {
+      if (currentBuzzObject) {
+        return currentAlbum.artist;
+      }
+    };
+
+    SongPlayer.setVolume = function(volume) {
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(volume);
+      }
+    };
 
     return SongPlayer;
   }

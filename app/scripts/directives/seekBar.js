@@ -18,50 +18,53 @@
          scope: {
            onChange: '&'
          },
-         link: function(scope, element, attributes) {
-           scope.value = 0;
-           scope.max = 100;
+         link: function($scope, element, attributes) {
+           $scope.value = 0;
+           $scope.max = 100;
 
            //Holds the element that matches the directive (<seek-bar>) as a jQuery object so we can call jQuery methods on it in calculatePercent
            var seekBar = $(element);
 
            attributes.$observe('value', function(newValue) {
-             scope.value = newValue;
+             $scope.value = newValue;
            });
 
            attributes.$observe('max', function(newValue) {
-             scope.max = newValue;
+             $scope.max = newValue;
            });
 
            var percentString = function () {
-               var value = scope.value;
-               var max = scope.max;
+             if ($scope.value == 0){
+               return '0%';
+             }
+               var value = $scope.value;
+               var max = $scope.max;
                var percent = value / max * 100;
                return percent + "%";
            };
 
-           scope.fillStyle = function() {
+           $scope.fillStyle = function() {
                return {width: percentString()};
            };
 
-           scope.thumbStyle = function() {
+           $scope.thumbStyle = function() {
              //updates position of seek bar thumb
              return {left: percentString()};
            };
 
            //Updates the seek bar value based on the seek bar's width and the location of the user's click on the seek bar.
-           scope.onClickSeekBar = function(event) {
+           $scope.onClickSeekBar = function(event) {
              var percent = calculatePercent(seekBar, event);
-             scope.value = percent * scope.max;
-             notifyOnChange(scope.value);
+             $scope.value = percent * $scope.max;
+             notifyOnChange($scope.value);
            };
 
-           scope.trackThumb = function() {
+           $scope.trackThumb = function() {
              $document.bind('mousemove.thumb', function(event) {
                var percent = calculatePercent(seekBar, event);
-               scope.$apply(function() {
-                 scope.value = percent * scope.max;
-                 notifyOnChange(scope.value);
+               $scope.$apply(function() {
+                 $scope.value = percent * $scope.max;
+                 notifyOnChange($scope.value);
                });
              });
              $document.bind('mouseup.thumb', function() {
@@ -70,9 +73,9 @@
              });
            };
 
-           var notifyOnChange = function(newValue) {
-             if (typeof scope.onChange === 'function') {
-               scope.onChange({value: newValue});
+           var notifyOnChange = function(newScopeValue) {
+             if (typeof $scope.onChange === 'function') {
+               $scope.onChange({userClickedValue: newScopeValue});
              }
            };
 
