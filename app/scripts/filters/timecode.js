@@ -4,22 +4,11 @@
 
       var seconds = Number.parseFloat(seconds);
 
-      if (Number.isNaN(seconds)) {
-        return '-:--';
+      output = buzz.toTimer(seconds);
+      if (output[0] == 0) {
+        output = output.slice(1);
       }
-
-      var wholeSeconds = Math.floor(seconds);
-      var minutes = Math.floor(wholeSeconds / 60);
-      var remainingSeconds = wholeSeconds % 60;
-
-      var output = minutes + ':';
-
-      if (remainingSeconds < 10) {
-        output += '0';
-      }
-
-      output += remainingSeconds;
-
+      
       return output;
     }
   }
