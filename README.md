@@ -1,6 +1,6 @@
-## Bloc-Jams
+# Bloc-Jams
 
-# Objectives
+### Objectives
 Bloc-jams is a music player web-app similar to Spotify. It was built using Angular’s front-end framework. The basis of design included the following use cases:
     As a developer, I want to:
 * bootstrap Angular to my app
@@ -9,10 +9,10 @@ Bloc-jams is a music player web-app similar to Spotify. It was built using Angul
 * create a service that handles song playback
 * write a directive that controls song and volume sliders
 
-# Technologies Used
+### Technologies Used
 Bloc-Jams was built on the Angular framework. Angular was chosen because it provides a great environment to build a single-page application. With just a single page load for all of the necessary CSS,  HTML, and Javascript it creates a smooth user experience.
 
-# Implementation Highlights
+### Implementation Highlights
 * Bloc-Jams was originally created using DOM scripting and jQuery library. It was expanded using Angular for app scalability and robustness.
 * The app features view templates for a landing page, album collection page, individual album page, and a player control bar.
 * MVC architecture was utilized to dynamically build the views using controllers.
